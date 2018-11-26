@@ -10,15 +10,16 @@
   
   <license>LGPLv2.1</license>
 
-
   <buildtool_depend>cmake</buildtool_depend>
 
   <build_depend>aws_common</build_depend>
-
+  <build_depend>ffmpeg</build_depend>
+  
   <build_export_depend>aws_common</build_export_depend>
 
   <exec_depend>aws_common</exec_depend>
-
+  <exec_depend>ffmpeg</exec_depend>
+  
   <export>
     <build_type>cmake</build_type>
   </export>
