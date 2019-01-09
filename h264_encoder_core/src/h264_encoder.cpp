@@ -42,8 +42,8 @@ constexpr char kFpsDenominatorKey[] = "fps_denominator";
 constexpr char kCodecKey[] = "codec";
 constexpr char kBitrateKey[] = "bitrate";
 
-constexpr char kPrimaryDefaultCodec[] = "h264_omx";
-constexpr char kSecondaryDefaultCodec[] = "libx264";
+constexpr char kDefaultHardwareCodec[] = "h264_omx";
+constexpr char kDefaultSoftwareCodec[] = "libx264";
 constexpr float kFragmentDuration = 1.0f; /* set fragment duration to 1.0 second */
 constexpr int kDefaultMaxBFrames = 0;
 constexpr int kDefaultFpsNumerator = 24;
@@ -125,15 +125,17 @@ public:
     avcodec_register_all();
 
     /* find the mpeg1 video encoder */
-    AVCodec * codec;
+    AVCodec * codec = nullptr;
     AVDictionary * opts = nullptr;
     if (codec_name.empty()) {
-      codec = avcodec_find_encoder_by_name(kPrimaryDefaultCodec);
+#ifdef HARDWARE_ENCODER
+      codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
+#endif
       if (nullptr == codec) {
-        codec = avcodec_find_encoder_by_name(kSecondaryDefaultCodec);
+        codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
         if (nullptr == codec) {
-          AWS_LOGSTREAM_ERROR(__func__, kPrimaryDefaultCodec << " and " << kSecondaryDefaultCodec
-                                                             << " codecs were not found!");
+          AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec
+                                                              << " codecs were not available!");
           return AWS_ERR_NOT_FOUND;
         }
         av_dict_set(&opts, "preset", "veryfast", 0);
