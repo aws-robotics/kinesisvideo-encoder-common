@@ -21,6 +21,7 @@
 #include <h264_encoder_core/h264_encoder.h>
 
 #include <cstdio>
+#include <dlfcn.h>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -30,6 +31,41 @@ extern "C" {
 }
 
 using namespace Aws::Utils::Logging;
+
+
+static bool is_omx_available()
+{
+  constexpr static const char * lib_names[3][2] = {
+    { "/opt/vc/lib/libopenmaxil.so", "/opt/vc/lib/libbcm_host.so" },
+    { "libOMX_Core.so", nullptr },
+    { "libOmxCore.so", nullptr }
+  };
+  constexpr static int num_libs = sizeof(lib_names) / sizeof(lib_names[0]);
+
+  for (int i = 0; i < num_libs; ++i) {
+    if (nullptr != lib_names[i][1]) {
+      void * lib2_handle = dlopen(lib_names[i][1], RTLD_NOW | RTLD_GLOBAL);
+      if (nullptr == lib2_handle) {
+        continue;
+      }
+
+      void * lib2_func = dlsym(lib2_handle, "bcm_host_init");
+      dlclose(lib2_handle);
+      if (nullptr == lib2_func) {
+        continue;
+      }
+    }
+
+    void * lib1_handle = dlopen(lib_names[i][0], RTLD_NOW | RTLD_GLOBAL);
+    if (nullptr != lib1_handle) {
+      dlclose(lib1_handle);
+      return true;
+    }
+  }
+
+  return false;
+}
+
 
 namespace Aws {
 namespace Utils {
@@ -128,10 +164,8 @@ public:
     AVCodec * codec = nullptr;
     AVDictionary * opts = nullptr;
     if (codec_name.empty()) {
-#ifdef HARDWARE_ENCODER
       codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
-#endif
-      if (nullptr == codec) {
+      if (nullptr == codec || !is_omx_available()) {
         codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
         if (nullptr == codec) {
           AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec

@@ -8,17 +8,6 @@ add_compile_options(-std=c++11)
 find_package(aws_common REQUIRED)
 
 
-# determine if OMX hardware encoder is available
-find_library(OPENMAXIL openmaxil /opt/vc/lib)
-find_library(BCM_HOST bcm_host /opt/vc/lib)
-find_library(OMXCORE NAMES OMX_Core OMXCore)
-
-if((OPENMAXIL AND BCM_HOST) OR OMXCORE)
-  message("Hardware encoder detected")
-  add_definitions(-DHARDWARE_ENCODER)
-endif()
-
-
 #############
 ## Compile ##
 #############
@@ -38,6 +27,7 @@ target_link_libraries(${PROJECT_NAME}
   avcodec
   avutil
   swscale
+  dl
 )
 
 
