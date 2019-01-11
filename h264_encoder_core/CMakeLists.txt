@@ -27,6 +27,7 @@ target_link_libraries(${PROJECT_NAME}
   avcodec
   avutil
   swscale
+  dl
 )
 
 
