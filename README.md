@@ -13,7 +13,6 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 
 ### Supported ROS Distributions
 - Kinetic
-- Lunar
 - Melodic
 
 ### Build status
