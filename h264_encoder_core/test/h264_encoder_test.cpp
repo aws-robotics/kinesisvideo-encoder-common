@@ -67,7 +67,12 @@ public:
     }
     return result;
   }
-  AwsError ReadBool(const char * name, bool & out) const { return AWS_ERR_NOT_FOUND; }
+
+  AwsError ReadBool(const char * name, bool & out) const
+  {
+    return AWS_ERR_NOT_FOUND;
+  }
+
   AwsError ReadStdString(const char * name, std::string & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
@@ -77,6 +82,7 @@ public:
     }
     return result;
   }
+
   AwsError ReadString(const char * name, Aws::String & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
@@ -86,15 +92,26 @@ public:
     }
     return result;
   }
+
   AwsError ReadMap(const char * name, std::map<std::string, std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
+
   AwsError ReadList(const char * name, std::vector<std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
-  AwsError ReadDouble(const char * name, double & out) const { return AWS_ERR_NOT_FOUND; }
+
+  AwsError ReadDouble(const char * name, double & out) const {
+    return AWS_ERR_NOT_FOUND;
+  }
+
+private:
+  std::string FormatParameterPath(const Client::ParameterPath & param_path) const
+  {
+    return param_path.get_resolved_path('/', '/');
+  }
 
   std::map<std::string, int> int_map_;
   std::map<std::string, std::string> string_map_;
