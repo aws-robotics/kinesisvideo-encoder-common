@@ -30,6 +30,7 @@ extern "C" {
 #include <libswscale/swscale.h>
 }
 
+using namespace Aws::Client;
 using namespace Aws::Utils::Logging;
 
 
@@ -330,19 +331,19 @@ H264Encoder::~H264Encoder() {}
 
 AwsError H264Encoder::Initialize(const int src_width, const int src_height,
                                  const AVPixelFormat src_encoding,
-                                 const Aws::Client::ParameterReaderInterface & dst_params)
+                                 const ParameterReaderInterface & dst_params)
 {
   int dst_width, dst_height;
-  bool dims_set = (dst_params.ReadInt(kOutputWidthKey, dst_width) == Aws::AWS_ERR_OK &&
-                   dst_params.ReadInt(kOutputHeightKey, dst_height) == Aws::AWS_ERR_OK);
+  bool dims_set = (dst_params.ReadParam(ParameterPath(kOutputWidthKey), dst_width) == Aws::AWS_ERR_OK &&
+                   dst_params.ReadParam(ParameterPath(kOutputHeightKey), dst_height) == Aws::AWS_ERR_OK);
   if (!dims_set) {
     dst_width = src_width;
     dst_height = src_height;
   }
 
   int fps_num, fps_den;
-  bool fps_set = (dst_params.ReadInt(kFpsNumeratorKey, fps_num) == Aws::AWS_ERR_OK &&
-                  dst_params.ReadInt(kFpsDenominatorKey, fps_den) == Aws::AWS_ERR_OK);
+  bool fps_set = (dst_params.ReadParam(ParameterPath(kFpsNumeratorKey), fps_num) == Aws::AWS_ERR_OK &&
+                  dst_params.ReadParam(ParameterPath(kFpsDenominatorKey), fps_den) == Aws::AWS_ERR_OK);
   if (!fps_set) {
     AWS_LOG_WARN(__func__, "fps not set");
     fps_num = kDefaultFpsNumerator;
@@ -350,10 +351,10 @@ AwsError H264Encoder::Initialize(const int src_width, const int src_height,
   }
 
   std::string codec;
-  dst_params.ReadStdString(kCodecKey, codec);
+  dst_params.ReadParam(ParameterPath(kCodecKey), codec);
 
   int bitrate = kDefaultBitrate;
-  dst_params.ReadInt(kBitrateKey, bitrate);
+  dst_params.ReadParam(ParameterPath(kBitrateKey), bitrate);
 
   impl_ = std::unique_ptr<H264EncoderImpl>(new H264EncoderImpl());
 
