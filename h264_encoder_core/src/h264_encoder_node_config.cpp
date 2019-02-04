@@ -37,16 +37,16 @@ Aws::AwsError GetH264EncoderNodeParams(const Aws::Client::ParameterReaderInterfa
                                        H264EncoderNodeParams & params)
 {
   params.subscription_topic = kDefaultSubscriptionTopic;
-  param_reader.ReadStdString(kSubscriptionTopicKey, params.subscription_topic);
+  param_reader.ReadParam(Aws::Client::ParameterPath(kSubscriptionTopicKey), params.subscription_topic);
 
   params.metadata_topic = kDefaultMetadataTopic;
-  param_reader.ReadStdString(kMetadataTopicKey, params.metadata_topic);
+  param_reader.ReadParam(Aws::Client::ParameterPath(kMetadataTopicKey), params.metadata_topic);
 
   params.publication_topic = kDefaultPublicationTopic;
-  param_reader.ReadStdString(kPublicationTopicKey, params.publication_topic);
+  param_reader.ReadParam(Aws::Client::ParameterPath(kPublicationTopicKey), params.publication_topic);
 
   params.queue_size = kDefaultQueueSize;
-  param_reader.ReadInt(kQueueSizeKey, params.queue_size);
+  param_reader.ReadParam(Aws::Client::ParameterPath(kQueueSizeKey), params.queue_size);
   if (params.queue_size < 0) {
     AWS_LOGSTREAM_ERROR(__func__, "Invalid queue size " << params.queue_size << "!");
     return AWS_ERR_PARAM;

@@ -37,12 +37,13 @@ constexpr int kDefaultBitrate = 2048000;
 constexpr char kDefaultCodec[] = "libx264";
 
 using namespace Aws;
+using namespace Aws::Client;
 using namespace Aws::Utils::Encoding;
 
 /**
  * Parameter reader that sets the output using provided std::mapS.
  */
-class TestParameterReader : public Client::ParameterReaderInterface
+class TestParameterReader : public ParameterReaderInterface
 {
 public:
   TestParameterReader() {}
@@ -58,9 +59,10 @@ public:
     string_map_ = {{"codec", codec}};
   }
 
-  AwsError ReadInt(const char * name, int & out) const
+  AwsError ReadParam(const ParameterPath & param_path, int & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = FormatParameterPath(param_path);
     if (int_map_.count(name) > 0) {
       out = int_map_.at(name);
       result = AWS_ERR_OK;
@@ -68,14 +70,15 @@ public:
     return result;
   }
 
-  AwsError ReadBool(const char * name, bool & out) const
+  AwsError ReadParam(const ParameterPath & param_path, bool & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
 
-  AwsError ReadStdString(const char * name, std::string & out) const
+  AwsError ReadParam(const ParameterPath & param_path, std::string & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = FormatParameterPath(param_path);
     if (string_map_.count(name) > 0) {
       out = string_map_.at(name);
       result = AWS_ERR_OK;
@@ -83,9 +86,10 @@ public:
     return result;
   }
 
-  AwsError ReadString(const char * name, Aws::String & out) const
+  AwsError ReadParam(const ParameterPath & param_path, Aws::String & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = FormatParameterPath(param_path);
     if (string_map_.count(name) > 0) {
       out = string_map_.at(name).c_str();
       result = AWS_ERR_OK;
@@ -93,22 +97,22 @@ public:
     return result;
   }
 
-  AwsError ReadMap(const char * name, std::map<std::string, std::string> & out) const
+  AwsError ReadParam(const ParameterPath & param_path, std::map<std::string, std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
 
-  AwsError ReadList(const char * name, std::vector<std::string> & out) const
+  AwsError ReadParam(const ParameterPath & param_path, std::vector<std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
 
-  AwsError ReadDouble(const char * name, double & out) const {
+  AwsError ReadParam(const ParameterPath & param_path, double & out) const {
     return AWS_ERR_NOT_FOUND;
   }
 
 private:
-  std::string FormatParameterPath(const Client::ParameterPath & param_path) const
+  std::string FormatParameterPath(const ParameterPath & param_path) const
   {
     return param_path.get_resolved_path('/', '/');
   }
