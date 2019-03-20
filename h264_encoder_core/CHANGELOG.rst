@@ -2,8 +2,8 @@
 Changelog for package h264_encoder_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.0 (2019-03-20)
+------------------
 * Update to use non-legacy ParameterReader API (`#9 <https://github.com/aws-robotics/kinesisvideo-encoder-common/issues/9>`_)
 * Update to use new ParameterReader API (`#8 <https://github.com/aws-robotics/kinesisvideo-encoder-common/issues/8>`_)
   * fix h264_encoder_test to be compatible with new ParameterReader API
