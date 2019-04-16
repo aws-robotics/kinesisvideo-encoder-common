@@ -19,8 +19,9 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 
 * Travis CI: [![Build Status](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common.svg?branch=master)](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common)
  * ROS build farm:
-   * v1.0.0:
-     * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
+   * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
+   * ROS Melodic @ u18.04 Bionic [![Build Status](http://build.ros.org/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros.org/view/Mbin_uB64/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/)
+
 
 [Amazon Web Services (AWS)]: https://aws.amazon.com/
 [LGPL 2.1]: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
