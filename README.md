@@ -32,7 +32,7 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 On Ubuntu you can install the latest version of this package using the following command
 
         sudo apt-get update
-        sudo apt-get install -y ros-kinetic-h264-encoder-core
+        sudo apt-get install -y ros-$ROS_DISTRO-h264-encoder-core
 
 ### Building from Source
 
@@ -40,11 +40,11 @@ To build from source you'll need to create a new workspace, clone and checkout t
 
 - Create a ROS workspace and a source directory
 
-    mkdir -p ~/ros-workspace/src
+        mkdir -p ~/ros-workspace/src
 
 - Clone the package into the source directory . 
 
-_Note: Replace __`{MAJOR.VERSION}`__ below with the latest major version number to get the latest release branch._
+    _Note: Replace __`{MAJOR.VERSION}`__ below with the latest major version number to get the latest release branch._
 
         cd ~/ros-workspace/src
         git clone https://github.com/aws-robotics/kinesisvideo-encoder-common.git -b release-v{MAJOR.VERSION}
