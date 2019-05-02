@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>h264_encoder_core</name>
   <version>2.0.0</version>
   <description>Common base code for ROS1/ROS2 H264 encoder node</description>
@@ -19,6 +19,11 @@
 
   <exec_depend>aws_common</exec_depend>
   <exec_depend>ffmpeg</exec_depend>
+  
+  <test_depend condition="$ROS_VERSION == 1">gtest</test_depend>
+  <test_depend condition="$ROS_VERSION == 1">google-mock</test_depend>
+  <test_depend condition="$ROS_VERSION == 2">ament_cmake_gtest</test_depend>
+  <test_depend condition="$ROS_VERSION == 2">ament_cmake_gmock</test_depend>
   
   <export>
     <build_type>cmake</build_type>
