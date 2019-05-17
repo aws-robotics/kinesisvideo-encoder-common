@@ -12,12 +12,12 @@
 
   <buildtool_depend>cmake</buildtool_depend>
 
-  <build_depend version_lt='2.0.0'>aws_common</build_depend>
+  <build_depend>aws_common</build_depend>
   <build_depend>ffmpeg</build_depend>
   
-  <build_export_depend version_lt='2.0.0'>aws_common</build_export_depend>
+  <build_export_depend>aws_common</build_export_depend>
 
-  <exec_depend version_lt='2.0.0'>aws_common</exec_depend>
+  <exec_depend>aws_common</exec_depend>
   <exec_depend>ffmpeg</exec_depend>
   
   <export>
