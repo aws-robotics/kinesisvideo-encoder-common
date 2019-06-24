@@ -18,12 +18,10 @@ env:
     # define DOWNSTREAM_GITHUB_REPO=name-of-your-repo if you'd like to trigger downstream repos' travis builds
     - ROS_DISTRO=kinetic ROS_VERSION=1
     - ROS_DISTRO=melodic ROS_VERSION=1
-    - ROS_DISTRO=bouncy  ROS_VERSION=2
-    - ROS_DISTRO=crystal ROS_VERSION=2
+    - ROS_DISTRO=dashing ROS_VERSION=2
 matrix:
   allow_failures:
-    - env: ROS_DISTRO=bouncy  ROS_VERSION=2
-    - env: ROS_DISTRO=crystal ROS_VERSION=2
+    - env: ROS_DISTRO=dashing ROS_VERSION=2
 install:
   - git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
