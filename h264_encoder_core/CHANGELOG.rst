@@ -2,8 +2,8 @@
 Changelog for package h264_encoder_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.1 (2019-08-01)
+------------------
 * increment patch version (`#30 <https://github.com/aws-robotics/kinesisvideo-encoder-common/issues/30>`_)
   Signed-off-by: Miaofei <miaofei@amazon.com>
 * Add gtest and gmock as test dependencies (`#14 <https://github.com/aws-robotics/kinesisvideo-encoder-common/issues/14>`_)
