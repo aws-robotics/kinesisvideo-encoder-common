@@ -72,13 +72,15 @@ find_common_test_packages()
 add_common_gtest(test_h264_encoder_core
   test/h264_encoder_test.cpp
 )
-target_include_directories(test_h264_encoder_core PRIVATE
-  include
-  ${aws_common_INCLUDE_DIRS}
-)
-target_link_libraries(test_h264_encoder_core
-  ${PROJECT_NAME}
-  ${aws_common_LIBRARIES}
-  ${GMOCK_LIBRARY}
-  pthread
-)
+if(TARGET test_h264_encoder_core)
+  target_include_directories(test_h264_encoder_core PRIVATE
+    include
+    ${aws_common_INCLUDE_DIRS}
+  )
+  target_link_libraries(test_h264_encoder_core
+    ${PROJECT_NAME}
+    ${aws_common_LIBRARIES}
+    ${GMOCK_LIBRARY}
+    pthread
+  )
+endif()
