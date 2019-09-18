@@ -14,6 +14,7 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 ### Supported ROS Distributions
 - Kinetic
 - Melodic
+- Dashing
 
 ### Build status
 * Travis CI:
@@ -22,7 +23,7 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 * ROS build farm:
     * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
     * ROS Melodic @ u18.04 Bionic [![Build Status](http://build.ros.org/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros.org/view/Mbin_uB64/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/)
-
+   * ROS Dashing @ u18.04 Bionic [![Build Status](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary)
 
 ## Installation
 
@@ -59,7 +60,7 @@ _Note: If building the master branch instead of a release branch you may need to
 
 - Configure ROS library Path
 
-        source ~/ros-workspace/install/setup.bash
+        source ~/ros-workspace/install/local_setup.bash
 
 
 [Amazon Web Services (AWS)]: https://aws.amazon.com/
