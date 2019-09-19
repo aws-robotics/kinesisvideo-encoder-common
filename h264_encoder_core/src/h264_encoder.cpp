@@ -67,6 +67,19 @@ static bool is_omx_available()
   return false;
 }
 
+static bool is_codec_available(AVCodec * codec) {
+  AVCodecContext * param = avcodec_alloc_context3(codec);
+  AVDictionary * opts = nullptr;
+
+  bool open_result = avcodec_open2(param, codec, &opts) < 0;
+  if (nullptr != param) {
+    avcodec_close(param);
+    av_free(param);
+  }
+ 
+  return open_result;
+}
+
 
 namespace Aws {
 namespace Utils {
@@ -166,7 +179,7 @@ public:
     AVDictionary * opts = nullptr;
     if (codec_name.empty()) {
       codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
-      if (nullptr == codec || !is_omx_available()) {
+      if (nullptr == codec || !is_omx_available() || !is_codec_available(codec)) {
         codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
         if (nullptr == codec) {
           AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec
