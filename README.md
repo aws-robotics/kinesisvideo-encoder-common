@@ -23,9 +23,13 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 * ROS build farm:
     * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
     * ROS Melodic @ u18.04 Bionic [![Build Status](http://build.ros.org/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros.org/view/Mbin_uB64/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/)
-   * ROS Dashing @ u18.04 Bionic [![Build Status](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary)
+    * ROS Dashing @ u18.04 Bionic [![Build Status](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary)
 
 ## Installation
+
+**Installing on Raspberry Pi**
+
+It is recommended that you build this package from source for use on the Raspberry Pi. The ROS2 build farm doesn't have ffmpeg and related encoding libraries that are specific to the Raspberry Pi and required to enable hardware encoding. If installing from apt on RaspberryPi expect to use software encoding which can be very slow with limited computing resources. Raspberry Pi-compatible ffmpeg binaries can be found in the ppa:ubuntu-pi-flavour-makers/ppa repository . Once you add the PPA to your system and use rosdep install to fetch the dependencies, you will be able to build this package and link it against the compatible dependencies.
 
 ### Binaries
 On Ubuntu you can install the latest version of this package using the following command

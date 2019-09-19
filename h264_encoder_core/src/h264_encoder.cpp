@@ -34,37 +34,17 @@ using namespace Aws::Client;
 using namespace Aws::Utils::Logging;
 
 
-static bool is_omx_available()
-{
-  constexpr static const char * lib_names[3][2] = {
-    { "/opt/vc/lib/libopenmaxil.so", "/opt/vc/lib/libbcm_host.so" },
-    { "libOMX_Core.so", nullptr },
-    { "libOmxCore.so", nullptr }
-  };
-  constexpr static int num_libs = sizeof(lib_names) / sizeof(lib_names[0]);
+static bool is_codec_available(AVCodec * codec) {
+  AVCodecContext * param = avcodec_alloc_context3(codec);
+  AVDictionary * opts = nullptr;
 
-  for (int i = 0; i < num_libs; ++i) {
-    if (nullptr != lib_names[i][1]) {
-      void * lib2_handle = dlopen(lib_names[i][1], RTLD_NOW | RTLD_GLOBAL);
-      if (nullptr == lib2_handle) {
-        continue;
-      }
-
-      void * lib2_func = dlsym(lib2_handle, "bcm_host_init");
-      dlclose(lib2_handle);
-      if (nullptr == lib2_func) {
-        continue;
-      }
-    }
-
-    void * lib1_handle = dlopen(lib_names[i][0], RTLD_NOW | RTLD_GLOBAL);
-    if (nullptr != lib1_handle) {
-      dlclose(lib1_handle);
-      return true;
-    }
+  bool open_result = avcodec_open2(param, codec, &opts) >= 0;
+  if (nullptr != param) {
+    avcodec_close(param);
+    av_free(param);
   }
-
-  return false;
+ 
+  return open_result;
 }
 
 
@@ -166,7 +146,7 @@ public:
     AVDictionary * opts = nullptr;
     if (codec_name.empty()) {
       codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
-      if (nullptr == codec || !is_omx_available()) {
+      if (nullptr == codec || !is_codec_available(codec)) {
         codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
         if (nullptr == codec) {
           AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec
