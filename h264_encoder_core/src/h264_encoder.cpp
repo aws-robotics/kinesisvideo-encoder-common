@@ -38,7 +38,7 @@ static bool is_codec_available(AVCodec * codec) {
   AVCodecContext * param = avcodec_alloc_context3(codec);
   AVDictionary * opts = nullptr;
 
-  bool open_result = avcodec_open2(param, codec, &opts) < 0;
+  bool open_result = avcodec_open2(param, codec, &opts) >= 0;
   if (nullptr != param) {
     avcodec_close(param);
     av_free(param);
