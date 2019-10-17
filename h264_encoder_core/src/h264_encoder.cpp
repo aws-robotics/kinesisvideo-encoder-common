@@ -33,21 +33,7 @@ extern "C" {
 using namespace Aws::Client;
 using namespace Aws::Utils::Logging;
 
-// Attempts to open a codec
-static Aws::AwsError open_codec(AVCodec * codec, AVCodecContext * param, AVDictionary * opts) {
-  AWS_LOGSTREAM_INFO(__func__, "Attempting to open codec: " << codec->name);
-  /* open it */
-  if (nullptr == codec) {
-    AWS_LOG_ERROR(__func__, "Invalid codec");
-    return Aws::AWS_ERR_FAILURE;
-  }
-  if (avcodec_open2(param, codec, &opts) < 0) {
-    AWS_LOG_ERROR(__func__, "Could not open codec");
-    return Aws::AWS_ERR_FAILURE;
-  }
- 
-  return Aws::AWS_ERR_OK;
-}
+
 
 namespace Aws {
 namespace Utils {
@@ -87,7 +73,14 @@ public:
   {
   }
 
+  /* Setup param_ 
+   * Function will fail if param_ is not nullptr
+   */
   AwsError set_param(AVCodec * codec) {
+    if (nullptr != param_) {
+      AWS_LOG_ERROR(__func__, "Unable to setup codec context. param_ must be null");
+      return AWS_ERR_FAILURE;
+    }
     param_ = avcodec_alloc_context3(codec);
     if (nullptr == param_) {
       AWS_LOG_ERROR(__func__, "Could not allocate video codec context");
@@ -109,6 +102,33 @@ public:
     param_->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
     param_->flags2 &= ~AV_CODEC_FLAG2_LOCAL_HEADER;
 
+    return AWS_ERR_OK;
+  }
+  
+  // Attempts to open a codec
+  AwsError open_codec(AVCodec * codec, AVDictionary * opts) {
+    if (nullptr == codec) {
+      AWS_LOG_ERROR(__func__, "Invalid codec");
+      return AWS_ERR_FAILURE;
+    }
+
+    AWS_LOGSTREAM_INFO(__func__, "Attempting to open codec: " << codec->name);
+    /*
+    if () {
+      AWS_LOG_ERROR(__func__, "Failed to set context for codec, could not open codec.");
+      return AWS_ERR_FAILURE;
+    }*/
+
+    if (AWS_ERR_OK != set_param(codec) || avcodec_open2(param_, codec, &opts) < 0 ) { //|| std::strcmp("h264_omx", codec->name)==0) {
+      AWS_LOG_ERROR(__func__, "Could not open codec");
+      if (nullptr != param_) {
+	      avcodec_close(param_);
+	      av_free(param_);
+	      param_ = nullptr;
+      }
+      return AWS_ERR_FAILURE;
+    }
+   
     return AWS_ERR_OK;
   }
 
@@ -174,12 +194,12 @@ public:
     AVDictionary * opts = nullptr;
     if (codec_name.empty()) {
       codec = avcodec_find_encoder_by_name(kDefaultHardwareCodec);
-      if (nullptr == codec || AWS_ERR_OK != set_param(codec) || AWS_ERR_OK != open_codec(codec, param_, opts)) {
+      if (AWS_ERR_OK != open_codec(codec, opts)) {
         codec = avcodec_find_encoder_by_name(kDefaultSoftwareCodec);
-	av_dict_set(&opts, "preset", "veryfast", 0);
+	      av_dict_set(&opts, "preset", "veryfast", 0);
         av_dict_set(&opts, "tune", "zerolatency", 0);
 
-        if (nullptr == codec || AWS_ERR_OK != set_param(codec) || AWS_ERR_OK != open_codec(codec, param_, opts)) {
+        if (AWS_ERR_OK != open_codec(codec, opts)) {
           AWS_LOGSTREAM_ERROR(__func__, kDefaultHardwareCodec << " and " << kDefaultSoftwareCodec
                                                               << " codecs were not available!");
           return AWS_ERR_NOT_FOUND;
@@ -187,7 +207,7 @@ public:
       }
     } else {
       codec = avcodec_find_encoder_by_name(codec_name.c_str());
-      if (nullptr == codec || AWS_ERR_OK != set_param(codec) || AWS_ERR_OK != open_codec(codec, param_, opts)) {
+      if (AWS_ERR_OK != open_codec(codec, opts)) {
         AWS_LOGSTREAM_ERROR(__func__, codec_name << " codec not found!");
         return AWS_ERR_NOT_FOUND;
       }
@@ -263,6 +283,7 @@ public:
     pkt.size = 0;
 
     int got_output = 0;
+
     int ret = avcodec_encode_video2(param_, &pkt, pic_in_, &got_output);
     ++pic_in_->pts;
     if (ret < 0) {
