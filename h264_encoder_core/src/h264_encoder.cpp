@@ -113,13 +113,8 @@ public:
     }
 
     AWS_LOGSTREAM_INFO(__func__, "Attempting to open codec: " << codec->name);
-    /*
-    if () {
-      AWS_LOG_ERROR(__func__, "Failed to set context for codec, could not open codec.");
-      return AWS_ERR_FAILURE;
-    }*/
 
-    if (AWS_ERR_OK != set_param(codec) || avcodec_open2(param_, codec, &opts) < 0 ) { //|| std::strcmp("h264_omx", codec->name)==0) {
+    if (AWS_ERR_OK != set_param(codec) || avcodec_open2(param_, codec, &opts) < 0 ) {
       AWS_LOG_ERROR(__func__, "Could not open codec");
       if (nullptr != param_) {
 	      avcodec_close(param_);
