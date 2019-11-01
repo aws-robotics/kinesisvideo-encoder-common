@@ -2,8 +2,8 @@
 Changelog for package h264_encoder_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.3 (2019-11-01)
+------------------
 * Update codec opening test to include opts and params (`#37 <https://github.com/aws-robotics/kinesisvideo-encoder-common/issues/37>`_)
   * Update codec opening test to include opts and params
   * bump package version
