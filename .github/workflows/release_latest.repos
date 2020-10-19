@@ -1,0 +1,5 @@
+repositories:
+  kinesisvideo-encoder-common:
+    type: git
+    url: https://github.com/aws-robotics/kinesisvideo-encoder-common
+    version: release-latest
