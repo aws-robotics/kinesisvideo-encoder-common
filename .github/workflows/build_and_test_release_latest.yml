@@ -1,9 +1,5 @@
 name: Build & Test release-latest
 on:
-  pull_request:
-  push:
-    branches:
-      - master
   schedule:
     # Run every hour. This helps detect flakiness,
     # and broken external dependencies.
@@ -32,25 +28,27 @@ jobs:
           extra_cmake_args: ""
     container:
       image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}-ros-base-latest
+    env:
+      # Needed for the CMakeLists.txt setup
+      ROS_DISTRO: ${{ matrix.ros_distro }}
+      ROS_VERSION: ${{ matrix.ros_version }}
     steps:
     # TODO(setup-ros-docker#7): calling chown is necessary for now
-    - run: sudo chown -R rosbuild:rosbuild "$HOME" .
-    # Needed for the CMakeLists.txt setup
-    - run: export ROS_DISTRO=${{ matrix.ros_distro }}
-    # Needed for the CMakeLists.txt setup
-    - run: export ROS_VERSION=${{ matrix.ros_version }}
+    - name: Run setup-ros-docker workaround
+      run: sudo chown -R rosbuild:rosbuild "$HOME" .
     # Needed to access the vcs repos file from the workspace
     - name: Checkout source
       uses: actions/checkout@v2
-    - uses: ros-tooling/action-ros-ci@0.0.17
+    - name: Run action-ros-ci to build and test
+      uses: ros-tooling/action-ros-ci@0.0.17
       with:
         source-ros-binary-installation: ${{ matrix.ros_distro }}
         package-name: h264_encoder_core
         extra-cmake-args: ${{ matrix.extra_cmake_args }}
         # schedule runs against the default branch (master), so specify release-latest via repos file
         vcs-repo-file-url: "${{ github.workspace }}/.github/workflows/release_latest.repos"
-    - uses: actions/upload-artifact@v1
+    - name: Upload resulting colcon logs
+      uses: actions/upload-artifact@v1
       with:
         name: colcon-logs-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}
         path: ros_ws/log
-
