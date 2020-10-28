@@ -17,9 +17,10 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 - Dashing
 
 ### Build status
-GitHub Action Status
-* master: ![Build & Test](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test/badge.svg?branch=master&event=schedule)
-* release-latest: ![Build & Test release-latest](https://github.com/aws-robotics/kinesisvideo-encoder-common//workflows/Build%20&%20Test%20release-latest/badge.svg?event=schedule)
+* GitHub Action Status
+     * master: ![Build & Test](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test/badge.svg?branch=master&event=schedule)
+     * release-latest: ![Build & Test release-latest](https://github.com/aws-robotics/kinesisvideo-encoder-common//workflows/Build%20&%20Test%20release-latest/badge.svg?event=schedule)
+
 
 * Travis CI:
     * "master" branch [![Build Status](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common.svg?branch=master)](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common/branches)
