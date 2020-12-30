@@ -20,11 +20,6 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 * GitHub Action Status
      * master: [![Build & Test](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test/badge.svg?branch=master&event=schedule)](https://github.com/aws-robotics/kinesisvideo-encoder-common/actions?query=workflow%3A"Build+%26+Test"+event%3Aschedule)
      * release-latest: [![Build & Test release-latest](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test%20release-latest/badge.svg?branch=master&event=schedule)](https://github.com/aws-robotics/kinesisvideo-encoder-common/actions?query=workflow%3A"Build+%26+Test+release-latest"+event%3Aschedule)
-
-
-* Travis CI:
-    * "master" branch [![Build Status](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common.svg?branch=master)](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common/branches)
-    * "release-latest" branch [![Build Status](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common.svg?branch=release-latest)](https://travis-ci.org/aws-robotics/kinesisvideo-encoder-common/branches)
 * ROS build farm:
     * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
     * ROS Melodic @ u18.04 Bionic [![Build Status](http://build.ros.org/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros.org/view/Mbin_uB64/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/)
