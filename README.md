@@ -9,33 +9,19 @@ The source code is released under [LGPL 2.1]. However, h264_encoder_core incorpo
 
 **Author**: AWS RoboMaker<br/>
 **Affiliation**: [Amazon Web Services (AWS)]<br/>
-**Maintainer**: AWS RoboMaker, ros-contributions@amazon.com
+
+RoboMaker cloud extensions rely on third-party software licensed under open-source licenses and are provided for demonstration purposes only. Incorporation or use of RoboMaker cloud extensions in connection with your production workloads or commercial product(s) or devices may affect your legal rights or obligations under the applicable open-source licenses. License information for this repository can be found [here](https://github.com/aws-robotics/kinesisvideo-encoder-common/blob/master/LICENSE). AWS does not provide support for this cloud extension. You are solely responsible for how you configure, deploy, and maintain this cloud extension in your workloads or commercial product(s) or devices.
 
 ### Supported ROS Distributions
 - Kinetic
 - Melodic
 - Dashing
 
-### Build status
-* GitHub Action Status
-     * master: [![Build & Test](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test/badge.svg?branch=master&event=schedule)](https://github.com/aws-robotics/kinesisvideo-encoder-common/actions?query=workflow%3A"Build+%26+Test"+event%3Aschedule)
-     * release-latest: [![Build & Test release-latest](https://github.com/aws-robotics/kinesisvideo-encoder-common/workflows/Build%20&%20Test%20release-latest/badge.svg?branch=master&event=schedule)](https://github.com/aws-robotics/kinesisvideo-encoder-common/actions?query=workflow%3A"Build+%26+Test+release-latest"+event%3Aschedule)
-* ROS build farm:
-    * ROS Kinetic @ u16.04 Xenial [![Build Status](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary/badge/icon)](http://build.ros.org/job/Kbin_uX64__h264_encoder_core__ubuntu_xenial_amd64__binary)
-    * ROS Melodic @ u18.04 Bionic [![Build Status](http://build.ros.org/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros.org/view/Mbin_uB64/job/Mbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/)
-    * ROS Dashing @ u18.04 Bionic [![Build Status](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary/badge/icon)](http://build.ros2.org/job/Dbin_uB64__h264_encoder_core__ubuntu_bionic_amd64__binary)
-
 ## Installation
 
 **Installing on Raspberry Pi**
 
 It is recommended that you build this package from source for use on the Raspberry Pi. The ROS2 build farm doesn't have ffmpeg and related encoding libraries that are specific to the Raspberry Pi and required to enable hardware encoding. If installing from apt on RaspberryPi expect to use software encoding which can be very slow with limited computing resources. Raspberry Pi-compatible ffmpeg binaries can be found in the ppa:ubuntu-pi-flavour-makers/ppa repository . Once you add the PPA to your system and use rosdep install to fetch the dependencies, you will be able to build this package and link it against the compatible dependencies.
-
-### Binaries
-On Ubuntu you can install the latest version of this package using the following command
-
-        sudo apt-get update
-        sudo apt-get install -y ros-$ROS_DISTRO-h264-encoder-core
 
 ### Building from Source
 
